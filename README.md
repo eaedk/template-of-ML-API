@@ -1,4 +1,8 @@
 # Template of ML API 
+
+[![python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+[![MIT licensed](https://img.shields.io/badge/license-mit-blue?style=for-the-badge&logo=appveyor)](./LICENSE)
+
 The purpose of this project is to present a template to create a ML API endpoint to predict against the request received from the client.
 
 
