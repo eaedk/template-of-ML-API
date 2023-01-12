@@ -57,16 +57,19 @@ async def predict(input: ModelInput):
 
     # try to execute the inference loop
     try:
-
+        # create a dataset-like (with the dataset header) dataframe
         df = pd.DataFrame([input.dict()])
         print(f"[Info] Dataframe created with header: {list(df.columns)}\n")
 
+        # apply the preprocessing used during ml model development
         final_input = preprocessor.transform(df)
         print(f"[Info] Input data transformed:\n")
 
-        prediction = model.predict(final_input).tolist()
+        # predict using the loaded, trained ml model
+        prediction = model.predict(final_input)
 
-        output = {"prediction": prediction}
+        # format the prediction as output
+        output = {"prediction": prediction.tolist()}
 
     except ValueError as e:
         output = {"error": str(e)}
