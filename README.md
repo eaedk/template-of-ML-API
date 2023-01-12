@@ -1,5 +1,5 @@
 # Template of ML API 
-The purpose of this project is to create an ML API endpoint to predict against the request received from the client.
+The purpose of this project is to present a template to create a ML API endpoint to predict against the request received from the client.
 
 
 ## Setup
