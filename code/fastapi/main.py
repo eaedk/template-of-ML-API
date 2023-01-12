@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import os, joblib, uvicorn
+from typing import List, Literal
 from pydantic import BaseModel
 import pandas as pd
 import numpy as np
@@ -19,28 +20,42 @@ preprocessor = joblib.load(PREPROCESSOR_FILEPATH)
 
 
 # CONFIG
-app = FastAPI(title ='Credit Card Churn Prediction', version = 1.0, description = 'Classification Machine Learning Prediction')
+app = FastAPI(
+    title="Credit Card Churn Prediction",
+    version=1.0,
+    description="Classification Machine Learning Prediction",
+)
 
 # INPUT MODELING
 class ModelInput(BaseModel):
-    """Modeling of the input data in a type-restricted dictionary-like format
-    
+    """Modeling of one input data in a type-restricted dictionary-like format
+
     column_name : variable type # strictly respect the name in the dataframe header.
 
     eg.:
     =========
     customer_age : int
-    gender : str
+    gender : Literal['male', 'female', 'other']
     """
-    
+
+
+class ModelInputs(BaseModel):
+    """Modeling of multiple inputs"""
+
+    inputs: List[ModelInput]
 
 
 # ENDPOINTS
 
 ## PREDICT
-@app.post("/credit_card_churn_prediction")
-async def predict(input:ModelInput):
-    prediction = None
+@app.post(
+    "/credit_card_churn_prediction"
+)  # the string in the post methode is the endpoint link
+async def predict(input: ModelInput):
+    "Function that receive the posted input data for inference and return an output prediction/error message"
+    output = None
+
+    # try to execute the inference loop
     try:
 
         df = pd.DataFrame([input.dict()])
@@ -50,15 +65,17 @@ async def predict(input:ModelInput):
         print(f"[Info] Input data transformed:\n")
 
         prediction = model.predict(final_input).tolist()
-        print(prediction)
 
-        return {"prediction":prediction}
-    
+        output = {"prediction": prediction}
+
     except ValueError as e:
-        return {"error": str(e)}
+        output = {"error": str(e)}
 
     except Exception as e:
-        return {"error": f"Oops something went wrong:\n{e}"}
+        output = {"error": f"Oops something went wrong:\n{e}"}
+    finally:
+        return output  # output must be json serializable
 
-if __name__ == '__main__':
-    uvicorn.run("main:app", reload = True)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)
