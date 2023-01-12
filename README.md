@@ -24,6 +24,28 @@ The both long command-lines have a same structure, they pipe multiple commands u
 
 **NB:** For MacOs users, please install `Xcode` if you have an issue.
 
+## Execution
+To execute the one template you may run the following commands.
+
+- FastAPI
+    
+    - python's command
+
+            python code/fastapi/main.py 
+    
+    - uvicorn's command
+
+            uvicorn code.fastapi.main:app --reload 
+
+    Open the api in the browser :
+        
+        http://127.0.0.1:8000/
+
+    Open the api's documentation in the browser :
+        
+        http://127.0.0.1:8000/docs
+
+
 ## Contributing
 Feel free to make a PR or report an issue 😃.
 
