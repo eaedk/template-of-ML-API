@@ -21,9 +21,9 @@ preprocessor = joblib.load(PREPROCESSOR_FILEPATH)
 
 # CONFIG
 app = FastAPI(
-    title="Credit Card Churn Prediction",
+    title="",  # something like "Credit Card Churn Prediction"
     version=1.0,
-    description="Classification Machine Learning Prediction",
+    description="", # something like "Classification Machine Learning Prediction"
 )
 
 # INPUT MODELING
@@ -49,7 +49,7 @@ class ModelInputs(BaseModel):
 
 ## PREDICT
 @app.post(
-    "/credit_card_churn_prediction"
+    "/__endpoint_link__" # something like "/credit_card_churn_prediction"
 )  # the string in the post methode is the endpoint link
 async def predict(input: ModelInput):
     "Function that receive the posted input data for inference and return an output prediction/error message"
