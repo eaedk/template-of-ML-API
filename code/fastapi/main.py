@@ -47,6 +47,15 @@ class ModelInputs(BaseModel):
 
 # ENDPOINTS
 
+## API STATUS
+@app.post("/status")  
+async def status():
+    return{"message": "online"}
+@app.get("/status")  
+async def status():
+    return{"message": "online"}
+
+
 ## PREDICT
 @app.post(
     "/__endpoint_link__" # something like "/credit_card_churn_prediction"
